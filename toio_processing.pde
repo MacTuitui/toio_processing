@@ -138,7 +138,7 @@ boolean rotateCube(int id, float ta) {
   float right = (-5*(1+strength)*dir);
   int duration = 100;
   motorControl(id, left, right, duration);
-  println("rotatae false "+diff +" "+ id+" "+ta +" "+cubes[id].deg);
+  //println("rotate false "+diff +" "+ id+" "+ta +" "+cubes[id].deg);
   return false;
 }
 
@@ -192,6 +192,9 @@ void keyPressed() {
       aimMotorControl(i, 380, 260);
     }
     break;
+  case 'l':
+    light(0, 100, 255, 0, 0);
+    break;
   default:
     break;
   }
@@ -219,6 +222,19 @@ void motorControl(int cubeId, float left, float right, int duration) {
   msg.add(duration);
   oscP5.send(msg, server[hostId]);
 }
+
+void light(int cubeId, int duration, int red, int green, int blue){
+  int hostId = cubeId/cubesPerHost;
+  int actualcubeid = cubeId % cubesPerHost;
+  OscMessage msg = new OscMessage("/led");
+  msg.add(actualcubeid);
+  msg.add(duration);
+  msg.add(red);
+  msg.add(green);
+  msg.add(blue);
+  oscP5.send(msg, server[hostId]);
+}
+
 
 void mousePressed() {
   chase = false;

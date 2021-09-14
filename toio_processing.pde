@@ -288,5 +288,15 @@ void oscEvent(OscMessage msg) {
     int id = cubesPerHost*hostId + relid;
     int pressValue =msg.get(2).intValue();
     println("Button pressed for id : "+id);
+  } else if (msg.checkAddrPattern("/motion") == true) {
+    int hostId = msg.get(0).intValue();
+    int relid = msg.get(1).intValue();
+    int id = cubesPerHost*hostId + relid;
+    int flatness =msg.get(2).intValue();
+    int hit =msg.get(3).intValue();
+    int double_tap =msg.get(4).intValue();
+    int face_up =msg.get(5).intValue();
+    int shake_level =msg.get(6).intValue();
+    println("motion for id "+id +": " + flatness +", "+ hit+", "+ double_tap+", "+ face_up+", "+ shake_level);
   }
 }
